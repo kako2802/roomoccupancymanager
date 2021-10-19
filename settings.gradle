@@ -1,4 +1,4 @@
 rootProject.name = 'room-occupancy'
 include 'room-occupancy-api'
-include 'room-occupancy-rest'
+include 'room-occupancy-web'
 
