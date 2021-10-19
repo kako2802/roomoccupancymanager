@@ -1,4 +1,4 @@
-package com.kako.room.occupancy;
+package occupancy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

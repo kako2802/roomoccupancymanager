@@ -1,4 +1,4 @@
-package com.kako.room.occupancy;
+package occupancy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
