@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoomOccupancyManagerTests {
 
-    private static final List<BigDecimal> CLIENTS_PRICES =
+    private static final List<BigDecimal> GUESTS_PRICES =
             Arrays.asList(
                     BigDecimal.valueOf(23),
                     BigDecimal.valueOf(45),
@@ -30,16 +30,16 @@ public class RoomOccupancyManagerTests {
     public void shouldReturnZeroRoomsOccupancyAndProfitWhenThereAreNoRoomsAndNoGuestsPrices() {
         // given
         BigDecimal roomCategoryDelimiter = BigDecimal.valueOf(100);
-        RoomOccupancyManager roomOccupancyManager = new RoomOccupancyManager(roomCategoryDelimiter);
+        RoomOccupancyManager roomOccupancyManager = new RoomOccupancyManager(new DefaultRoomOccupancyStrategy(roomCategoryDelimiter));
 
         // when
         RoomOccupancyWithProfit roomOccupancyWithProfit = roomOccupancyManager.calculateRoomOccupancyAndProfit(0, 0, emptyList());
 
         // then
-        assertEquals(0, roomOccupancyWithProfit.getEconomicRoomsOccupancy());
-        assertEquals(0, roomOccupancyWithProfit.getPremiumRoomsOccupancy());
-        assertEquals(BigDecimal.ZERO, roomOccupancyWithProfit.getPremiumRoomProfit());
-        assertEquals(BigDecimal.ZERO, roomOccupancyWithProfit.getEconomicRoomProfit());
+        assertEquals(0, roomOccupancyWithProfit.economicRoomsOccupancy());
+        assertEquals(0, roomOccupancyWithProfit.premiumRoomsOccupancy());
+        assertEquals(BigDecimal.ZERO, roomOccupancyWithProfit.premiumRoomProfit());
+        assertEquals(BigDecimal.ZERO, roomOccupancyWithProfit.economicRoomProfit());
     }
 
     @ParameterizedTest
@@ -51,18 +51,18 @@ public class RoomOccupancyManagerTests {
             "3, 8, 3, 7, 1153.99, 90"})
     public void shouldReturnAllRoomsOccupancyAndProfitWhenThereAreRoomsAndGuestsPrices(int numberOfAvailableEconomicRooms, int numberOfAvailablePremiumRooms,
                                                                                        int expectedNumberOfOccupiedEconomicRooms, int expectedNumberOfOccupiedPremiumRooms,
-                                                                                       BigDecimal expectedEconomicRoomsProfit, BigDecimal expectedPremiumRoomsProfit){
+                                                                                       BigDecimal expectedPremiumRoomsProfit, BigDecimal expectedEconomicRoomsProfit){
         // given
         BigDecimal roomCategoryDelimiter = BigDecimal.valueOf(100);
-        RoomOccupancyManager roomOccupancyManager = new RoomOccupancyManager(roomCategoryDelimiter);
+        RoomOccupancyManager roomOccupancyManager = new RoomOccupancyManager(new DefaultRoomOccupancyStrategy(roomCategoryDelimiter));
 
         // when
-        RoomOccupancyWithProfit roomOccupancyWithProfit = roomOccupancyManager.calculateRoomOccupancyAndProfit(numberOfAvailableEconomicRooms, numberOfAvailablePremiumRooms, CLIENTS_PRICES);
+        RoomOccupancyWithProfit roomOccupancyWithProfit = roomOccupancyManager.calculateRoomOccupancyAndProfit(numberOfAvailableEconomicRooms, numberOfAvailablePremiumRooms, GUESTS_PRICES);
 
         // then
-        assertEquals(expectedNumberOfOccupiedEconomicRooms, roomOccupancyWithProfit.getEconomicRoomsOccupancy());
-        assertEquals(expectedNumberOfOccupiedPremiumRooms, roomOccupancyWithProfit.getPremiumRoomsOccupancy());
-        assertEquals(expectedEconomicRoomsProfit, roomOccupancyWithProfit.getPremiumRoomProfit());
-        assertEquals(expectedPremiumRoomsProfit, roomOccupancyWithProfit.getEconomicRoomProfit());
+        assertEquals(expectedNumberOfOccupiedEconomicRooms, roomOccupancyWithProfit.economicRoomsOccupancy());
+        assertEquals(expectedNumberOfOccupiedPremiumRooms, roomOccupancyWithProfit.premiumRoomsOccupancy());
+        assertEquals(expectedPremiumRoomsProfit, roomOccupancyWithProfit.premiumRoomProfit());
+        assertEquals(expectedEconomicRoomsProfit, roomOccupancyWithProfit.economicRoomProfit());
     }
 }
