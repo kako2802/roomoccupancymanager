@@ -23,3 +23,14 @@ Root project 'room-occupancy' <br/>
 
 ## How to run application
 ./gradlew room-occupancy-web:bootRun
+
+# Example http request to API:
+
+POST http://127.0.0.1:8080/hotel/rooms/occupancy
+
+body data
+{
+"numberOfAvailableEconomicRooms" : 3,
+"numberOfAvailablePremiumRooms" : 3,
+"guestsPrices" : [23,45,155,374,22,99.99,100,101,115,209]
+}

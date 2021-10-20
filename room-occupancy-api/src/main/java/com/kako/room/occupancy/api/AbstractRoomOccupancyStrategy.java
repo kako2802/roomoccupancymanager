@@ -7,11 +7,12 @@ import java.util.List;
 
 public abstract class AbstractRoomOccupancyStrategy implements RoomOccupancyStrategy {
 
+    private static final RoomOccupancyWithProfit DEFAULT_ROOM_OCCUPANCY_RESULT = new RoomOccupancyWithProfit(0, 0, BigDecimal.ZERO, BigDecimal.ZERO);
+
     @Override
     public RoomOccupancyWithProfit calculateRoomOccupancyAndProfit(int numberOfAvailableEconomyRooms, int numberOfAvailablePremiumRooms, Collection<BigDecimal> guestsPrices) {
-        if (isTheNumberOfRoomsIncorrect(numberOfAvailableEconomyRooms, numberOfAvailablePremiumRooms) ||
-                isGuestsPricesIncorrect(guestsPrices)) {
-            return new RoomOccupancyWithProfit(0, 0, BigDecimal.ZERO, BigDecimal.ZERO);
+        if (isTheNumberOfRoomsIncorrect(numberOfAvailableEconomyRooms, numberOfAvailablePremiumRooms) || isGuestsPricesIncorrect(guestsPrices)) {
+            return DEFAULT_ROOM_OCCUPANCY_RESULT;
         }
 
         Collection<List<BigDecimal>> partitionedGuestsPrices = partitionGuestsPrices(guestsPrices);
